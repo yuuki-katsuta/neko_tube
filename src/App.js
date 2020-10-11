@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import YSearch from 'youtube-api-search';
+import Header from './components/Header/Header'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      bideos: [],
+    }
+  }
+
+  // componentDidMountでAPIリクエストを行う
+  componentDidMount() {
+    YSearch({ key: YOUTUBE_API_KEY, term: '猫　きゅうり' }, (data) => {
+      this.setState({ videos: data });
+    });
+  }
+  componentDidUpdate() {
+    console.log(this.state.videos)
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+      </div>
+    );
+  }
 }
 
 export default App;
