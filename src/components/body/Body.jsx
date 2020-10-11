@@ -7,7 +7,6 @@ const Body = (props) => {
         {props.children}
       </div>
     </div>
-
   )
 }
 
