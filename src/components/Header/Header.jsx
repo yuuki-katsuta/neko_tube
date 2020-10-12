@@ -6,6 +6,7 @@ class Header extends React.Component {
     this.state = {
       keyword: "",
     }
+    this.onInputChangeHandler = this.onInputChangeHandler.bind(this)
   }
 
   onInputChangeHandler = (e) => {

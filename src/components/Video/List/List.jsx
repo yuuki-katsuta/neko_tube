@@ -7,6 +7,7 @@ const List = (props) => {
       {props.videos.map((video, index) => (
         (() => {
           if (props.selectedVideo !== video) {
+            //現在表示中のvideoと同じではないなら
             return (
               <Item
                 video={video}

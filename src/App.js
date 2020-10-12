@@ -5,6 +5,7 @@ import Header from './components/Header/Header'
 import Body from './components/body/Body'
 import List from './components/Video/List/List'
 import Video from './components/Video/Video'
+import _ from 'lodash';
 
 const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
 
@@ -16,6 +17,8 @@ class App extends React.Component {
       //クリックされた動画の情報を管理
       selectedVideo: null
     }
+    this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this)
+    this.onVideoClickedHandler = this.onVideoClickedHandler.bind(this)
   }
 
   // componentDidMountでAPIリクエストを行う
@@ -33,20 +36,37 @@ class App extends React.Component {
     this.setState({ selectedVideo: video })
   }
 
-  //検索バーに文字を打ち込むと、発火するイベント
-  onKeywordChangeHandler = (keyword) => {
+  onKeywordChangeHandler = _.throttle((keyword) => {
     let newTerm = '猫' + keyword
     if (keyword === '') {
       newTerm = '猫　睡眠'
     }
-    //文字を打ち込むと、データを取ってくるようにする
     YSearch({ key: YOUTUBE_API_KEY, term: newTerm }, (data) => {
       this.setState({
         videos: data,
         selectedVideo: data[0]
       });
+      console.log('こんにちは')
     })
+  }, 1500);
+
+  /*
+  var _changeData = _.throttle(function (newData) {
+    // サーバへの同期処理
+  }, 1000));
+
+  function onChangeData (newData) { // データが変更されるたびに呼ばれる
+   _changeData();
   }
+
+  //文字を打ち込むと、データを取ってくるようにする
+  YSearch({ key: YOUTUBE_API_KEY, term: newTerm }, (data) => {
+    this.setState({
+      videos: data,
+      selectedVideo: data[0]
+    });
+  })
+  */
 
   render() {
     return (

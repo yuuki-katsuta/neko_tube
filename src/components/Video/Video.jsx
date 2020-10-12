@@ -5,7 +5,6 @@ const Video = (props) => {
   //props.videoがnullのときの処理
   if (!props.video) {
     return (
-      // わかりやすいように青にしています。
       <div className="video col-md-8">
         動画を読み込み中でーす！！
       </div>
