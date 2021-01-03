@@ -1,30 +1,26 @@
-import React from 'react'
+import React from 'react';
 
 const Video = (props) => {
-
-  //props.videoがnullのときの処理
   if (!props.video) {
-    return (
-      <div className="video col-md-8">
-        動画を読み込み中でーす！！
-      </div>
-    );
-    //returnからあとは実行されない
+    return <div className='video col-md-8'>動画を読み込み中でーす！！</div>;
   }
-
   const videoURL = 'https://www.youtube.com/embed/' + props.video.id.videoId;
 
   return (
-    <div className="video col-lg-8" >
-      <div className="embed-responsive embed-responsive-16by9">
-        <iframe className="embed-responsive-item" src={videoURL} title="selectedVideo"></iframe>
+    <div className='video col-lg-8'>
+      <div className='embed-responsive embed-responsive-16by9'>
+        <iframe
+          className='embed-responsive-item'
+          src={videoURL}
+          title='selectedVideo'
+        ></iframe>
       </div>
-      <div className="info">
+      <div className='info'>
         <h2>{props.video.snippet.title}</h2>
         <p>{props.video.snippet.description}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Video
+export default Video;

@@ -1,76 +1,54 @@
 import React from 'react';
 import './App.css';
 import YSearch from 'youtube-api-search';
-import Header from './components/Header/Header'
-import Body from './components/body/Body'
-import List from './components/Video/List/List'
-import Video from './components/Video/Video'
+import Header from './components/Header/Header';
+import Body from './components/body/Body';
+import List from './components/Video/List/List';
+import Video from './components/Video/Video';
 import _ from 'lodash';
 
-const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
+const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       videos: [],
-      //クリックされた動画の情報を管理
-      selectedVideo: null
-    }
-    this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this)
-    this.onVideoClickedHandler = this.onVideoClickedHandler.bind(this)
+      selectedVideo: null,
+    };
+    this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
+    this.onVideoClickedHandler = this.onVideoClickedHandler.bind(this);
   }
 
-  // componentDidMountでAPIリクエストを行う
   componentDidMount() {
     YSearch({ key: YOUTUBE_API_KEY, term: '猫　睡眠' }, (data) => {
       this.setState({
         videos: data,
-        selectedVideo: data[0]
+        selectedVideo: data[0],
       });
     });
   }
 
-  //動画リスト中のItem componentがクリックされたら、その動画情報を取得して、selectedVideosの値を更新する
   onVideoClickedHandler = (video) => {
-    this.setState({ selectedVideo: video })
-  }
+    this.setState({ selectedVideo: video });
+  };
 
   onKeywordChangeHandler = _.throttle((keyword) => {
-    let newTerm = '猫' + keyword
+    let newTerm = '猫' + keyword;
     if (keyword === '') {
-      newTerm = '猫　睡眠'
+      newTerm = '猫　睡眠';
     }
     YSearch({ key: YOUTUBE_API_KEY, term: newTerm }, (data) => {
       this.setState({
         videos: data,
-        selectedVideo: data[0]
+        selectedVideo: data[0],
       });
-      console.log('こんにちは')
-    })
-  }, 1500);
-
-  /*
-  var _changeData = _.throttle(function (newData) {
-    // サーバへの同期処理
-  }, 1000));
-
-  function onChangeData (newData) { // データが変更されるたびに呼ばれる
-   _changeData();
-  }
-
-  //文字を打ち込むと、データを取ってくるようにする
-  YSearch({ key: YOUTUBE_API_KEY, term: newTerm }, (data) => {
-    this.setState({
-      videos: data,
-      selectedVideo: data[0]
     });
-  })
-  */
+  }, 1500);
 
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Header onKeywordChanged={this.onKeywordChangeHandler} />
         <Body>
           <Video video={this.state.selectedVideo} />
@@ -84,6 +62,5 @@ class App extends React.Component {
     );
   }
 }
-//selectedVideo={this.state.selectedVideo}で現在再生中の動画の情報を渡した
 
 export default App;
