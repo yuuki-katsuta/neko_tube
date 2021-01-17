@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import YSearch from 'youtube-api-search';
 import Header from './components/Header/Header';
 import Body from './components/body/Body';
