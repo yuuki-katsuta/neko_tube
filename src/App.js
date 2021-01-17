@@ -4,7 +4,6 @@ import Header from './components/Header/Header';
 import Body from './components/body/Body';
 import List from './components/Video/List/List';
 import Video from './components/Video/Video';
-import _ from 'lodash';
 
 const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -32,7 +31,7 @@ class App extends React.Component {
     this.setState({ selectedVideo: video });
   };
 
-  onKeywordChangeHandler = _.throttle((keyword) => {
+  onKeywordChangeHandler = (keyword) => {
     let newTerm = '猫' + keyword;
     if (keyword === '') {
       newTerm = '猫　睡眠';
@@ -43,7 +42,7 @@ class App extends React.Component {
         selectedVideo: data[0],
       });
     });
-  }, 1500);
+  };
 
   render() {
     return (
